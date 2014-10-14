@@ -28,8 +28,9 @@ namespace Efocus.Sitecore.Renderers
             try
             {
                 current.Writer = writer;
-                //using (var htmlWriter = new HtmlTextWriter(writer))
-                //    RenderSublayout(htmlWriter);
+                //in itemvisualization.getrenderings, the context is swithed to shell#lang cookie???
+                //so if you're  logged in into sitecore cms, you'll get the renderings in an incorrect language!
+                HttpContext.Current.Request.Cookies.Remove("shell#lang");
                 new SitecorePlaceholder(Rendering.RenderingItem).RenderView(current);
             }
             finally
